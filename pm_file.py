@@ -1,4 +1,13 @@
 # coding:utf-8
+"""
+pm_file.py
+目录和文件相关函数
+~~~~~~~~~~~~~~~~~~~
+creation time : 2018 1 19
+author : anning
+email : anning@kingtansin.com
+~~~~~~~~~~~~~~~~~~~
+"""
 
 import os
 import sys
@@ -10,6 +19,8 @@ from posixpath import join
 import h5py
 import numpy as np
 from configobj import ConfigObj
+
+from pm_time import get_ymd_and_hm, is_cross_time, get_date_range, str2date
 
 
 def get_file_list(dir_path, pattern=''):
@@ -30,7 +41,7 @@ def get_file_list(dir_path, pattern=''):
 
 def get_path_and_name(file_path):
     """
-    获取文件的路径和文件名
+    通过一个绝对地址获取文件的所在文件夹和文件名
     :param file_path: 文件的完整路径名
     :return:
     """
@@ -38,29 +49,12 @@ def get_path_and_name(file_path):
         path, file_name = os.path.split(file_path)
         return [path, file_name]
     else:
-        raise ValueError('文件不存在')
-
-
-def filter_file_by_date(file_list, date_range):
-    """
-    过滤日期范围内的文件
-    :param file_list: (list) 存放文件名的列表
-    :param date_range: (str) YYYYMMDD-YYYYMMDD 或者 YYYYMM-YYYYMM
-    :return:
-    """
-    new_file_list = []
-    start_date, end_date = date_str2int(date_range)
-    for file_name in file_list:
-        ymd, hm = get_ymd_and_hm(file_name)
-        file_date = int(ymd)
-        if is_cross_time(start_date, end_date, file_date, file_date):
-            new_file_list.append(file_name)
-    return new_file_list
+        raise ValueError(u'文件不存在')
 
 
 def filter_file_list(file_list, pattern='.*'):
     """
-    过滤日期范围内的文件
+    过滤符合匹配模式的文件
     :param file_list: (list) 存放文件名的列表
     :param pattern: (str) 匹配规则
     :return:
@@ -71,3 +65,17 @@ def filter_file_list(file_list, pattern='.*'):
         if m:
             new_file_list.append(file_name)
     return new_file_list
+
+
+def filter_file_by_date_range(dir_path, start_date, end_date):
+    """
+    过滤日期范围内的目录
+    :return:
+    """
+    dirs = os.listdir(dir_path)
+    tem_dir_list = []
+    for dir_name in dirs:
+        dir_date = str2date(dir_name)
+        if is_cross_time(dir_date, dir_date, start_date, end_date):
+            tem_dir_list.append(os.path.join(dir_path, dir_name))
+    return tem_dir_list

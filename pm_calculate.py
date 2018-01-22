@@ -1,4 +1,13 @@
 # coding:utf-8
+"""
+pm_calculate.py
+计算相关函数
+~~~~~~~~~~~~~~~~~~~
+creation time : 2018 1 19
+author : anning
+email : anning@kingtansin.com
+~~~~~~~~~~~~~~~~~~~
+"""
 
 import os
 import sys

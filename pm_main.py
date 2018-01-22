@@ -1,4 +1,13 @@
 # coding:utf-8
+"""
+pm_main.py
+主程序相关函数
+~~~~~~~~~~~~~~~~~~~
+creation time : 2018 1 19
+author : anning
+email : anning@kingtansin.com
+~~~~~~~~~~~~~~~~~~~
+"""
 
 import os
 import sys
@@ -25,12 +34,3 @@ def get_config(file_path, file_name):
         return config_obj
     else:
         raise ValueError('配置文件不存在')
-
-
-def get_main_dir():
-    """
-    获取主程序所在目录
-    :return: (str)
-    """
-    main_dir_path, main_file = os.path.split(os.path.realpath(__file__))
-    return main_dir_path
