@@ -39,6 +39,22 @@ def read_hdf5_dataset(file_path, set_name):
         return dataset
 
 
+def modify_dataset_name_hdf5(file_path, old_name, new_name):
+    """
+    修改 hdf5 文件的表名称
+    :param file_path: (unicode)文件路径
+    :param old_name: 旧名称
+    :param new_name: 新名称
+    :return: 
+    """
+    if os.path.isfile(file_path):
+        file_h5py = h5py.File(file_path, 'a')
+        file_h5py.move(old_name, new_name)
+        file_h5py.close()
+    else:
+        raise ValueError('value error：file_path')
+
+
 def compress_hdf5(pre_hdf5, out_dir=None, out_file=None, level=5):
     """
     对 hdf5 文件进行压缩
