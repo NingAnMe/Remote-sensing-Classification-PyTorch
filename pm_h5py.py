@@ -5,7 +5,6 @@ hdf5 处理相关函数
 ~~~~~~~~~~~~~~~~~~~
 creation time : 2018 1 19
 author : anning
-email : anning@kingtansin.com
 ~~~~~~~~~~~~~~~~~~~
 """
 
@@ -101,7 +100,8 @@ def compress(pre_object, out_object, level=5):
     """
     对 h5df 文件进行深复制，同时对数据表进行压缩
     :param pre_object: 
-    :param out_object: 
+    :param out_object:
+    :param level:
     :return: 
     """
     for key in pre_object.keys():
