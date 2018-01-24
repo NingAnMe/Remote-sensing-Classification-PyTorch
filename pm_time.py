@@ -5,7 +5,6 @@ pm_time.py
 ~~~~~~~~~~~~~~~~~~~
 creation time : 2018 1 19
 author : anning
-email : anning@kingtansin.com
 ~~~~~~~~~~~~~~~~~~~
 """
 
