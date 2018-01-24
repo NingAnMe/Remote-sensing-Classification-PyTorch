@@ -25,18 +25,33 @@ def read_dataset_hdf5(file_path, set_name):
     """
     读取 hdf5 文件，返回一个 numpy 多维数组
     :param file_path: (unicode)文件路径
-    :param set_name: (str)表的名字
-    :return: baseset：(numpy.ndarray)读取到的数据
+    :param set_name: (str or list)表的名字
+    :return: 如果传入的表名字是一个字符串，返回 numpy.ndarray
+             如果传入的表名字是一个列表，返回一个字典，key 是表名字， value 是 numpy.ndarry
     """
-    dataset = []
-    if os.path.isfile(file_path):
-        file_h5py = h5py.File(file_path, 'r')
-        data = file_h5py.get(set_name)[:]
-        dataset = np.array(data)
-        file_h5py.close()
-        return dataset
+    if isinstance(set_name, str):
+        if os.path.isfile(file_path):
+            file_h5py = h5py.File(file_path, 'r')
+            data = file_h5py.get(set_name)[:]
+            dataset = np.array(data)
+            file_h5py.close()
+            return dataset
+        else:
+            raise ValueError('value error: file_path')
+    elif isinstance(set_name, list):
+        datasets = {}
+        if os.path.isfile(file_path):
+            file_h5py = h5py.File(file_path, 'r')
+            for name in set_name:
+                data = file_h5py.get(name)[:]
+                dataset = np.array(data)
+                datasets[name] = dataset
+            file_h5py.close()
+            return datasets
+        else:
+            raise ValueError('value error: file_path')
     else:
-        return dataset
+        raise ValueError('value error: set_name')
 
 
 def modify_dataset_name_hdf5(file_path, old_name, new_name):
@@ -76,7 +91,7 @@ def compress_hdf5(pre_hdf5, out_dir=None, out_file=None, level=5):
     pre_hdf5 = h5py.File(pre_hdf5, 'r')
     new_hdf5 = h5py.File(new_hdf5, 'w')
 
-    compress(pre_hdf5, new_hdf5)
+    compress(pre_hdf5, new_hdf5, level)
 
     pre_hdf5.close()
     new_hdf5.close()
