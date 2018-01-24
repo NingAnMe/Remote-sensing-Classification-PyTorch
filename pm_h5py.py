@@ -21,7 +21,7 @@ import numpy as np
 from configobj import ConfigObj
 
 
-def read_hdf5_dataset(file_path, set_name):
+def read_dataset_hdf5(file_path, set_name):
     """
     读取 hdf5 文件，返回一个 numpy 多维数组
     :param file_path: (unicode)文件路径
