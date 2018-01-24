@@ -20,9 +20,9 @@ import numpy as np
 from configobj import ConfigObj
 
 
-def get_avg_and_std(dataset, data_range):
+def get_centre_point_avg_and_std(dataset, data_range):
     """
-    计算平均值和标准差
+    计算数据集的平均值和标准差，二维或者三维
     :param dataset: (np.ndarray)获取的数据集
     :param data_range: (int)截取范围大小
     :return:(list)
@@ -34,7 +34,7 @@ def get_avg_and_std(dataset, data_range):
         # 获取轴数
         shape = dataset.shape
         dim = int(shape[0])
-        avg_and_std = calculate_avg_and_std(dataset, dim, data_range)
+        avg_and_std = calculate_centre_point_avg_and_std(dataset, dim, data_range)
         return avg_and_std
 
     elif rank == 3:  # 多条通道
@@ -47,7 +47,7 @@ def get_avg_and_std(dataset, data_range):
         channels_avg_and_std = []
         for i in xrange(0, channel_num):
             dataset_tem = dataset[i]
-            avg_and_std = calculate_avg_and_std(dataset_tem, dim, data_range)
+            avg_and_std = calculate_centre_point_avg_and_std(dataset_tem, dim, data_range)
             channels_avg_and_std.append(avg_and_std)
         return channels_avg_and_std
 
@@ -55,9 +55,9 @@ def get_avg_and_std(dataset, data_range):
         return ['-nan', '-nan']
 
 
-def calculate_avg_and_std(dataset, dim, data_range=3):
+def calculate_centre_point_avg_and_std(dataset, dim, data_range=3):
     """
-    计算均值和标准差
+    计算一个二维正方形数据集中心点的均值和标准差
     :param dataset: 一个二维数据列表
     :param dim: 轴数
     :param data_range: 范围大小
@@ -79,3 +79,5 @@ def calculate_avg_and_std(dataset, dim, data_range=3):
             return ['-nan', '-nan']
         else:
             return [avg, std]
+    else:
+        raise ValueError('value error： dataset')
