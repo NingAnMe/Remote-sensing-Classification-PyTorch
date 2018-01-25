@@ -20,12 +20,16 @@ import numpy as np
 from configobj import ConfigObj
 
 
-def get_ymd_and_hm(file_name):
+def get_ymd_and_hm(file_path):
     """
     从文件名或者目录名中获取日期和时间
     :param file_name: (str)文件名
     :return:
     """
+    if file_path:
+        file_name = os.path.split(file_path)[1]
+    else:
+        raise ValueError('value error: wrong file_path')
     # 从文件名中获取
     if os.path.isfile(file_name):
         pat = r'.*(\d{8}).*(\d{4})'
@@ -40,8 +44,6 @@ def get_ymd_and_hm(file_name):
         ymd = m.group()[0:8]
         hm = m.group()[8:12]
         return ymd, hm
-    else:
-        raise ValueError()
 
 
 def is_cross_time(start_date1, end_date1, start_date2, end_date2):
