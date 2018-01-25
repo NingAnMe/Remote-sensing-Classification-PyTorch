@@ -34,7 +34,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(config['PATH']['PATH'], '/root/home/user')
 
         with self.assertRaises(ValueError):
-            config = get_config('.', 'wrong.cfg')
+            get_config('.', 'wrong.cfg')
 
 
 class TestTime(unittest.TestCase):
@@ -76,4 +76,3 @@ class TestTime(unittest.TestCase):
         self.assertEqual(get_ymd_and_hm(dirpath2), ['201801', ''])
         self.assertEqual(get_ymd_and_hm(dirpath3), ['20180101', ''])
         self.assertEqual(get_ymd_and_hm(dirpath4), ['20180101', '0101'])
-
