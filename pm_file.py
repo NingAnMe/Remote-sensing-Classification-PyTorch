@@ -66,7 +66,7 @@ def filter_file_list(file_list, pattern='.*'):
     return new_file_list
 
 
-def filter_file_by_date_range(dir_path, start_date, end_date):
+def filter_dir_by_date_range(dir_path, start_date, end_date):
     """
     过滤日期范围内的目录
     :return:
