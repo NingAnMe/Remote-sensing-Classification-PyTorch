@@ -11,6 +11,7 @@ import os
 import unittest
 
 from pm_main import get_config
+from pm_time import get_ymd_and_hm, is_cross_time, str2date, date_str2list, get_date_range
 
 
 class TestMain(unittest.TestCase):
@@ -31,3 +32,18 @@ class TestMain(unittest.TestCase):
 
         config = get_config('.', 'test_config.cfg')
         self.assertEqual(config['PATH']['PATH'], '/root/home/user')
+
+        with self.assertRaises(ValueError):
+            config = get_config('.', 'wrong.cfg')
+
+
+class TestTime(unittest.TestCase):
+    """
+    pm_time 测试
+    """
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
