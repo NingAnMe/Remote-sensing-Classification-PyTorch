@@ -27,7 +27,7 @@ def get_file_list(dir_path, pattern=''):
     查找目录下的所有符合匹配模式的文件的绝对路径，包括文件夹中的文件
     :param dir_path: (str)目录路径
     :param pattern: (str)匹配模式 'hdf'
-    :return: (list) 一个绝对路径列表，一个文件名列表
+    :return: (list) 绝对路径列表
     """
     file_list = []
     # 递归查找目录下所有文件
@@ -41,14 +41,14 @@ def get_file_list(dir_path, pattern=''):
 def get_path_and_name(file_path):
     """
     通过一个绝对地址获取文件的所在文件夹和文件名
-    :param file_path: 文件的完整路径名
-    :return:
+    :param file_path: (str)文件的完整路径名
+    :return: (list)[路径, 文件名]
     """
     if os.path.isfile(file_path):
         path, file_name = os.path.split(file_path)
         return [path, file_name]
     else:
-        raise ValueError(u'文件不存在')
+        raise ValueError('value error: not a file_path')
 
 
 def filter_file_list(file_list, pattern='.*'):
