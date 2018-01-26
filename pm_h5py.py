@@ -53,6 +53,40 @@ def read_dataset_hdf5(file_path, set_name):
         raise ValueError('value error: set_name')
 
 
+def read_attr_hdf5(file_path, set_name, attr_name):
+    """
+    读取 hdf5 文件，返回属性值
+    :param file_path: (unicode)文件路径
+    :param set_name: (str)表的名字
+    :param attr_name: (str or list)属性的名字
+    :return: 如果传入的属性的名字是一个字符串，返回对应的属性值
+             如果传入的属性的名字是一个列表，返回一个字典，key 是属性名， value 是对应的属性值
+    """
+    if isinstance(attr_name, str):
+        if os.path.isfile(file_path):
+            file_h5py = h5py.File(file_path, 'r')
+            set_h5py = file_h5py.get(set_name)
+            attr = set_h5py.attrs.get(attr_name)
+            file_h5py.close()
+            return attr
+        else:
+            raise ValueError('value error: file_path')
+    elif isinstance(attr_name, list):
+        attrs = {}
+        if os.path.isfile(file_path):
+            file_h5py = h5py.File(file_path, 'r')
+            set_h5py = file_h5py.get(set_name)
+            for name in attr_name:
+                attr = set_h5py.attrs.get(name)
+                attrs[name] = attr
+            file_h5py.close()
+            return attrs
+        else:
+            raise ValueError('value error: file_path')
+    else:
+        raise ValueError('value error: attr_name')
+
+
 def modify_dataset_name_hdf5(file_path, old_name, new_name):
     """
     修改 hdf5 文件的表名称
