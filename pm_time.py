@@ -32,7 +32,7 @@ def get_ymd_and_hm(file_path):
         raise ValueError('value error: wrong file_path')
     # 从文件名中获取
     if os.path.isfile(file_path):
-        pat = r'.*(\d{8}).*(\d{4})'
+        pat = r'.*(\d{8})_(\d{4})'
         m = re.match(pat, file_name)
         ymd = m.group(1)
         hm = m.group(2)
