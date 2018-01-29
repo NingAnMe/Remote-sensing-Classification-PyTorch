@@ -130,3 +130,49 @@ def rolling_calculate_avg_std(dataset, rolling_lines):
         avg_std_list.append([avg, std])
     avg_std_list = np.array(avg_std_list)
     return avg_std_list
+
+
+def filter_valid_value(dataset, avg_std_list, multiple):
+    """
+    过滤标准差范围内的有效值，dataset 和 avg_std_list 行数需要相同
+    :param dataset: (np.ndarray)二维数据集
+    :param avg_std_list: (np.ndarray or list)二维数据集
+    :param multiple: 过滤多少倍 std 范围内的值
+    :return: (np.ndarray)一个与原来数组行数相同的二维数组
+    """
+    dataset_new = []
+    if len(dataset) == 0:
+        return dataset_new
+    else:
+        # 一共多少行
+        line_count = dataset.shape[0]
+        for i in xrange(0, line_count):
+            dataset_new.append([])
+            line = dataset[i]
+            avg, std = avg_std_list[i]
+
+            if len(line) == 0:
+                continue
+            else:
+                for value in line:
+                    if is_valid(value, avg, std, multiple):
+                        dataset_new[i].append(value)
+                    else:
+                        continue
+    dataset_new = np.array(dataset_new)
+    return dataset_new
+
+
+def is_valid(value, avg, std, multiple):
+    """
+    判断是否是标准差范围内的有效值
+    :param value: 数值
+    :param avg: 均值
+    :param std: 标准差
+    :param multiple: 倍数
+    :return:
+    """
+    if (avg - std * multiple) <= value <= (avg + std * multiple):
+        return True
+    else:
+        return False
