@@ -103,6 +103,17 @@ def modify_dataset_name_hdf5(file_path, old_name, new_name):
         raise ValueError('value error：file_path')
 
 
+def copy_attrs_h5py(pre_object, out_object):
+    """
+    复制 dataset 或者 group 的属性
+    :param pre_object: 被复制属性的 dataset 或者 group
+    :param out_object: 复制属性的 dataset 或者 group
+    :return:
+    """
+    for akey in pre_object.attrs.keys():
+        out_object.attrs[akey] = pre_object.attrs[akey]
+
+
 def compress_hdf5(pre_hdf5, out_dir=None, out_file=None, level=5):
     """
     对 hdf5 文件进行压缩
