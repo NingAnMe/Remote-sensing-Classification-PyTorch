@@ -104,3 +104,29 @@ def extract_lines(dataset, probe_count, probe_id):
         end += probe_count
     dataset_new = np.array(dataset_new)
     return dataset_new
+
+
+def rolling_calculate_avg_std(dataset, rolling_lines):
+    """
+    对数组进行滚动计算，输出均值和标准差的列表
+    :param dataset: (np.ndarray)二维数据集
+    :param rolling_lines: 每次滚动的行数
+    :return: (np.ndarray)
+    """
+    line_before = rolling_lines / 2  # 本行数据的前
+    line_after = rolling_lines - (rolling_lines / 2)  # 本行数据后
+    line_count = dataset.shape[0]  # 数据集的总行数
+    # 滚动处理
+    avg_std_list = []
+    for i in xrange(0, line_count):
+        start = i - line_before + 1  # 开始的行号
+        start = start if start >= 0 else 0
+        end = i + line_after + 1  # 结束的行号
+        end = end if end <= line_count else line_count
+
+        tem_dataset = dataset[start: end, :]
+        avg = np.mean(tem_dataset)  # 计算均值
+        std = np.std(tem_dataset)  # 计算标准差
+        avg_std_list.append([avg, std])
+    avg_std_list = np.array(avg_std_list)
+    return avg_std_list
