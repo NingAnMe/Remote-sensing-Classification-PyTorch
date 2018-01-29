@@ -12,7 +12,7 @@ import os
 import sys
 import logging
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from posixpath import join
 
 import h5py
@@ -74,7 +74,8 @@ def filter_dir_by_date_range(dir_path, start_date, end_date):
     dirs = os.listdir(dir_path)
     tem_dir_list = []
     for dir_name in dirs:
-        dir_date = str2date(dir_name)
-        if is_cross_time(dir_date, dir_date, start_date, end_date):
+        dir_date_start = str2date(dir_name)
+        dir_date_end = dir_date_start + timedelta(days=365) - timedelta(seconds=1)
+        if is_cross_time(dir_date_start, dir_date_end, start_date, end_date):
             tem_dir_list.append(os.path.join(dir_path, dir_name))
     return tem_dir_list
