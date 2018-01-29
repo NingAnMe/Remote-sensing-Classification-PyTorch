@@ -22,7 +22,7 @@ from configobj import ConfigObj
 from pm_time import get_ymd_and_hm, is_cross_time, get_date_range, str2date
 
 
-def get_file_list(dir_path, pattern=''):
+def get_file_list(dir_path, pattern=r'.*'):
     """
     查找目录下的所有符合匹配模式的文件的绝对路径，包括文件夹中的文件
     :param dir_path: (str)目录路径
@@ -33,7 +33,8 @@ def get_file_list(dir_path, pattern=''):
     # 递归查找目录下所有文件
     for root, dir_list, file_names in os.walk(dir_path):
         for i in file_names:
-            if pattern in i:
+            m = re.match(pattern, i)
+            if m:
                 file_list.append(os.path.join(root, i))
     return file_list
 
@@ -51,7 +52,7 @@ def get_path_and_name(file_path):
         raise ValueError('value error: not a file_path')
 
 
-def filter_file_list(file_list, pattern='.*'):
+def filter_file_list(file_list, pattern=r'.*'):
     """
     过滤符合匹配模式的文件
     :param file_list: (list) 存放文件名的列表
