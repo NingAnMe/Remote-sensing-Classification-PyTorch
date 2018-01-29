@@ -81,3 +81,26 @@ def calculate_centre_point_avg_and_std(dataset, dim, data_range=3):
             return [avg, std]
     else:
         raise ValueError('value error： dataset')
+
+
+def extract_lines(dataset, probe_count, probe_id):
+    """
+    提取探头号对应行的数据
+    :param dataset: (np.ndarray)二维数据集
+    :param probe_count: 探头数量
+    :param probe_id: 探头号
+    :return:
+    """
+    start = 0  # 开始行号
+    end = start + probe_count  # 结束行号
+    line_count = dataset.shape[0]  # 数据集总行数
+    probe_id = int(probe_id) - 1
+    dataset_new = []
+    while start < line_count:
+        # 取探元号对应行的数据
+        line = dataset[start: end, :][probe_id]
+        dataset_new.append(line)
+        start += probe_count
+        end += probe_count
+    dataset_new = np.array(dataset_new)
+    return dataset_new
