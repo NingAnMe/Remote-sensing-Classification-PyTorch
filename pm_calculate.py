@@ -201,3 +201,17 @@ def calculate_avg(dataset):
                 avg_list[i].append(avg)
     avg_list = np.array(avg_list)
     return avg_list
+
+
+def expand_dataset_line(dataset, multiple):
+    """
+    将一个数据集的行数扩大为原来的 N 倍，N 行使用原来一行的数据
+    :param dataset: 二维数据集
+    :param multiple: 倍数
+    :return:
+    """
+    dataset_new = []
+    for line in dataset:
+        for i in xrange(0, multiple):
+            dataset_new.append(line)
+    return dataset_new
