@@ -76,15 +76,17 @@ def filter_dir_by_date_range(dir_path, start_date, end_date):
     for dir_name in dirs:
         dir_date = int(dir_name)
         if len(dir_name) == 4:
-            start_date = int(start_date.strftime('%Y'))
-            end_date = int(end_date.strftime('%Y'))
-        if len(dir_name) == 6:
-            start_date = int(start_date.strftime('%Y%m'))
-            end_date = int(end_date.strftime('%Y%m'))
-        if len(dir_name) == 8:
-            start_date = int(start_date.strftime('%Y%m%d'))
-            end_date = int(end_date.strftime('%Y%m%d'))
+            start_date_tem = int(start_date.strftime('%Y'))
+            end_date_tem = int(end_date.strftime('%Y'))
+        elif len(dir_name) == 6:
+            start_date_tem = int(start_date.strftime('%Y%m'))
+            end_date_tem = int(end_date.strftime('%Y%m'))
+        elif len(dir_name) == 8:
+            start_date_tem = int(start_date.strftime('%Y%m%d'))
+            end_date_tem = int(end_date.strftime('%Y%m%d'))
+        else:
+            raise ValueError('value error: dir_path')
 
-        if is_cross_time(dir_date, dir_date, start_date, end_date):
+        if is_cross_time(dir_date, dir_date, start_date_tem, end_date_tem):
             tem_dir_list.append(os.path.join(dir_path, dir_name))
     return tem_dir_list
