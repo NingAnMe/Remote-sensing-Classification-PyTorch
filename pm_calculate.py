@@ -176,3 +176,28 @@ def is_valid(value, avg, std, multiple):
         return True
     else:
         return False
+
+
+def calculate_avg(dataset):
+    """
+    计算二维数组中每一行数据的均值
+    :param dataset: (np.ndarray)二维数组
+    :return: 一个与原来数组行数相同的二维数组
+    """
+    avg_list = []
+    if len(dataset) == 0:
+        return avg_list
+    else:
+        # 一共多少行
+        line_count = dataset.shape[0]
+        for i in xrange(0, line_count):
+            avg_list.append([])
+            line = dataset[i]
+
+            if len(line) == 0:
+                continue
+            else:
+                avg = np.mean(line)
+                avg_list[i].append(avg)
+    avg_list = np.array(avg_list)
+    return avg_list
