@@ -12,7 +12,10 @@ import os
 import sys
 import logging
 import re
+import time
 from datetime import datetime
+from functools import wraps
+from contextlib import contextmanager
 from posixpath import join
 
 import h5py
@@ -116,3 +119,29 @@ def get_date_range(date_range):
     start_date = str2date(start_date)
     end_date = str2date(end_date)
     return [start_date, end_date]
+
+
+def time_this(func):
+    """
+    装饰器，测试函数的运行时间
+    :param func:
+    :return:
+    """
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.clock()
+        r = func(*args, **kwargs)
+        end = time.clock()
+        print('{}.{} : {}'.format(func.__module__, func.__name__, end - start))
+        return r
+    return wrapper
+
+
+@contextmanager
+def time_block(label):
+    start = time.clock()
+    try:
+        yield
+    finally:
+        end = time.clock()
+        print(u'{} : {}'.format(label, end - start))

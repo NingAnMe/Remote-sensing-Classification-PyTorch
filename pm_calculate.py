@@ -93,16 +93,15 @@ def extract_lines(dataset, probe_count, probe_id):
     """
     start = 0  # 开始行号
     end = start + probe_count  # 结束行号
-    line_count = dataset.shape[0]  # 数据集总行数
+    line_count = len(dataset)  # 数据集总行数
     probe_id = int(probe_id) - 1
     dataset_new = []
     while start < line_count:
         # 取探元号对应行的数据
-        line = dataset[start: end, :][probe_id]
+        line = dataset[start: end][probe_id]
         dataset_new.append(line)
         start += probe_count
         end += probe_count
-    dataset_new = np.array(dataset_new)
     return dataset_new
 
 
@@ -115,7 +114,7 @@ def rolling_calculate_avg_std(dataset, rolling_lines):
     """
     line_before = rolling_lines / 2  # 本行数据的前
     line_after = rolling_lines - (rolling_lines / 2)  # 本行数据后
-    line_count = dataset.shape[0]  # 数据集的总行数
+    line_count = len(dataset)  # 数据集的总行数
     # 滚动处理
     avg_std_list = []
     for i in xrange(0, line_count):
@@ -124,13 +123,13 @@ def rolling_calculate_avg_std(dataset, rolling_lines):
         end = i + line_after + 1  # 结束的行号
         end = end if end <= line_count else line_count
         tem_dataset = dataset[start: end]
-        tem_dataset = [i.tolist() for i in tem_dataset if len(i) != 0]
-        if len(tem_dataset) == 0:
-            avg_std_list.append([0, 0])
-        else:
+        tem_dataset = [i for i in tem_dataset if len(i) != 0]
+        if len(tem_dataset) != 0:
             avg = np.mean(tem_dataset)  # 计算均值
             std = np.std(tem_dataset)  # 计算标准差
             avg_std_list.append([avg, std])
+        else:
+            avg_std_list.append([0, 0])
     avg_std_list = np.array(avg_std_list)
     return avg_std_list
 
@@ -148,21 +147,16 @@ def filter_valid_value(dataset, avg_std_list, multiple):
         return dataset_new
     else:
         # 一共多少行
-        line_count = dataset.shape[0]
+        line_count = len(dataset)
         for i in xrange(0, line_count):
-            dataset_new.append([])
             line = dataset[i]
             avg, std = avg_std_list[i]
 
+            line = [value for value in line if is_valid(value, avg, std, multiple)]
             if len(line) == 0:
-                continue
-            else:
-                for value in line:
-                    if is_valid(value, avg, std, multiple):
-                        dataset_new[i].append(value)
-                    else:
-                        continue
-    dataset_new = np.array(dataset_new)
+                line.append(0)
+            dataset_new.append(np.asarray(line))
+
     return dataset_new
 
 
@@ -192,17 +186,15 @@ def calculate_avg(dataset):
         return avg_list
     else:
         # 一共多少行
-        line_count = dataset.shape[0]
+        line_count = len(dataset)
         for i in xrange(0, line_count):
-            avg_list.append([])
             line = dataset[i]
 
             if len(line) == 0:
-                continue
+                avg = 0
             else:
                 avg = np.mean(line)
-                avg_list[i].append(avg)
-    avg_list = np.array(avg_list)
+            avg_list.append(avg)
     return avg_list
 
 
