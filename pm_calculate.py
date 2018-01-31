@@ -123,11 +123,14 @@ def rolling_calculate_avg_std(dataset, rolling_lines):
         start = start if start >= 0 else 0
         end = i + line_after + 1  # 结束的行号
         end = end if end <= line_count else line_count
-
-        tem_dataset = dataset[start: end, :]
-        avg = np.mean(tem_dataset)  # 计算均值
-        std = np.std(tem_dataset)  # 计算标准差
-        avg_std_list.append([avg, std])
+        tem_dataset = dataset[start: end]
+        tem_dataset = [i.tolist() for i in tem_dataset if len(i) != 0]
+        if len(tem_dataset) == 0:
+            avg_std_list.append([0, 0])
+        else:
+            avg = np.mean(tem_dataset)  # 计算均值
+            std = np.std(tem_dataset)  # 计算标准差
+            avg_std_list.append([avg, std])
     avg_std_list = np.array(avg_std_list)
     return avg_std_list
 
