@@ -121,6 +121,21 @@ def get_date_range(date_range):
     return [start_date, end_date]
 
 
+def get_dsl(filename, launch_date):
+    """
+    根据文件名和发射时间获取相差的天数
+    :param filename: (str)文件名
+    :param launch_date: (str)卫星发射时间 YYYYMMDD
+    :return: (int)
+    """
+    ymd, hm = get_ymd_and_hm(filename)
+    date1 = str2date(ymd)
+    date2 = str2date(launch_date)
+    delta = date1 - date2
+    dsl = delta.days
+    return dsl
+
+
 def time_this(func):
     """
     装饰器，测试函数的运行时间
