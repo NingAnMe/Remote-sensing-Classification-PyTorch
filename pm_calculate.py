@@ -91,17 +91,17 @@ def extract_lines(dataset, probe_count, probe_id):
     :param probe_id: 探头号
     :return:
     """
-    start = 0  # 开始行号
-    end = start + probe_count  # 结束行号
+    probe_count = probe_count  # 探头数量
     line_count = len(dataset)  # 数据集总行数
-    probe_id = int(probe_id) - 1
-    dataset_new = []
-    while start < line_count:
-        # 取探元号对应行的数据
-        line = dataset[start: end][probe_id]
-        dataset_new.append(line)
-        start += probe_count
-        end += probe_count
+    probe_id = int(probe_id) - 1  # 将探头号转换为计算机数值
+
+    dataset_index = []
+    index = probe_id
+    while index < line_count:
+        dataset_index.append(index)
+        index += probe_count
+
+    dataset_new = dataset[dataset_index, :]
     return dataset_new
 
 
