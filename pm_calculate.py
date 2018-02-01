@@ -123,7 +123,9 @@ def rolling_calculate_avg_std(dataset, rolling_lines):
         end = i + line_after + 1  # 结束的行号
         end = end if end <= line_count else line_count
         tem_dataset = dataset[start: end]
-        tem_dataset = [i for i in tem_dataset if len(i) != 0]
+        # 除去填充值 0
+        idx = np.where(tem_dataset != 0)
+        tem_dataset = tem_dataset[idx]
         if len(tem_dataset) != 0:
             avg = np.mean(tem_dataset)  # 计算均值
             std = np.std(tem_dataset)  # 计算标准差
@@ -150,12 +152,15 @@ def filter_valid_value(dataset, avg_std_list, multiple):
         line_count = len(dataset)
         for i in xrange(0, line_count):
             line = dataset[i]
+            # 除去无效值
+            idx = np.where(line != 0)
+            line = line[idx]
             avg, std = avg_std_list[i]
 
             line = [value for value in line if is_valid(value, avg, std, multiple)]
             if len(line) == 0:
                 line.append(0)
-            dataset_new.append(np.asarray(line))
+            dataset_new.append(line)
 
     return dataset_new
 
@@ -194,6 +199,7 @@ def calculate_avg(dataset):
                 avg = 0
             else:
                 avg = np.mean(line)
+
             avg_list.append(avg)
     return avg_list
 
