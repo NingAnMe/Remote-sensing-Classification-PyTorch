@@ -29,8 +29,8 @@ class File(object):
         :param path: 文件路径
         :param name: 文件名
         :param suffix: 文件后缀
-        :param date: 文件包含数据的日期
-        :param time: 文件包含数据的时间
+        :param date: 文件中数据的创建日期
+        :param time: 文件中数据的创建时间
         """
         self.path = path
         self.name = name
