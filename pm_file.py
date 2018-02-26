@@ -22,6 +22,28 @@ from configobj import ConfigObj
 from pm_time import get_ymd_and_hm, is_cross_time, get_date_range, str2date
 
 
+class File(object):
+
+    def __init__(self, path=None, name=None, suffix=None, date=None, time=None):
+        self.path = path
+        self.name = name
+        self.suffix = suffix
+        self.date = date
+        self.time = time
+
+    def get_name(self):
+        pass
+
+    def get_suffix(self):
+        pass
+
+    def get_date(self):
+        pass
+
+    def get_time(self):
+        pass
+
+
 def get_file_list(dir_path, pattern=r'.*'):
     """
     查找目录下的所有符合匹配模式的文件的绝对路径，包括文件夹中的文件
