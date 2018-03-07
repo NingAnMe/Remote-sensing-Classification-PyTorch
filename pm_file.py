@@ -53,8 +53,11 @@ class File(object):
         获取路径中的文件名
         :return:
         """
-        name = os.path.split(self.path)
-        self.name = name
+        try:
+            name = os.path.split(self.path)[1]
+            self.name = name
+        except TypeError:
+            self.name = None
 
     def get_suffix(self):
         """
