@@ -91,7 +91,15 @@ class File(object):
             self.suffix = None
 
     def get_date(self):
-        pass
+        """
+        获取在文件名中获取文件首次生成的时间
+        :return:
+        """
+        ymdhm = get_ymd_and_hm(self.path)
+        if ymdhm:
+            self.date = ymdhm[0]
+        else:
+            self.date = None
 
     def get_time(self):
         pass
