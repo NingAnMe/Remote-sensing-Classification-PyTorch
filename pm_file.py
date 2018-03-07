@@ -26,7 +26,7 @@ class File(object):
 
     def __init__(self, path, name=None, suffix=None, date=None, time=None):
         """
-        :param path: 文件路径
+        :param path: 文件完整路径
         :param name: 文件名
         :param suffix: 文件后缀
         :param date: 文件中数据的创建日期
@@ -46,7 +46,7 @@ class File(object):
         获取路径中的文件名
         :return:
         """
-        file_dir, name = os.path.split(self.path)
+        name = os.path.split(self.path)
         self.name = name
 
     def get_suffix(self):
