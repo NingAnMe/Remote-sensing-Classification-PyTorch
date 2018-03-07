@@ -45,8 +45,15 @@ class File(object):
         self.date = date
         self.time = time
 
-    def get_status(self):
-        pass
+    def is_file(self):
+        """
+        判断是否成功初始化一个 File 实例
+        :return:
+        """
+        if self.path is None:
+            return False
+        else:
+            return True
 
     def get_path(self, path):
         """
