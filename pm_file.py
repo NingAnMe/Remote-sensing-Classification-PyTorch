@@ -92,7 +92,7 @@ class File(object):
 
     def get_date(self):
         """
-        获取在文件名中获取文件首次生成的日期
+        在文件名中获取文件首次生成的日期
         文件名中的时间格式：yyyymmdd_hhmm
         :return:
         """
@@ -107,7 +107,20 @@ class File(object):
             self.date = None
 
     def get_time(self):
-        pass
+        """
+        在文件名中获取文件首次生成的时间
+        文件名中的时间格式：yyyymmdd_hhmm
+        :return:
+        """
+        ymdhm = get_ymd_and_hm(self.path)
+        if ymdhm:
+            hm = ymdhm[1]
+            if len(hm) != 0:
+                self.time = hm
+            else:
+                self.time = None
+        else:
+            self.time = None
 
 
 def get_file_list(dir_path, pattern=r'.*'):
