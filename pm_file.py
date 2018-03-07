@@ -48,6 +48,19 @@ class File(object):
     def get_status(self):
         pass
 
+    def get_path(self, path):
+        """
+        获取文件的完整路径
+        :return:
+        """
+        try:
+            if os.path.isfile(path):
+                self.path = path
+            else:
+                self.path = None
+        except TypeError:
+            self.path = None
+
     def get_name(self):
         """
         获取路径中的文件名
