@@ -57,7 +57,15 @@ class File(object):
         self.name = name
 
     def get_suffix(self):
-        pass
+        """
+        获取文件的后缀
+        :return:
+        """
+        try:
+            suffix = os.path.splitext(self.path)[1]
+            self.suffix = suffix
+        except TypeError:
+            self.suffix = None
 
     def get_date(self):
         pass
