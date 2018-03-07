@@ -24,15 +24,22 @@ from pm_time import get_ymd_and_hm, is_cross_time, get_date_range, str2date
 
 class File(object):
 
-    def __init__(self, path, name=None, suffix=None, date=None, time=None):
+    def __init__(self, path,
+                 dir_path=None,
+                 name=None,
+                 suffix=None,
+                 date=None,
+                 time=None):
         """
         :param path: 文件完整路径
+        :param dir_path: 文件所在的上级目录的路径
         :param name: 文件名
         :param suffix: 文件后缀
         :param date: 文件中数据的创建日期
         :param time: 文件中数据的创建时间
         """
         self.path = path
+        self.path = dir_path
         self.name = name
         self.suffix = suffix
         self.date = date
