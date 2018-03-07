@@ -26,27 +26,30 @@ from configobj import ConfigObj
 def get_ymd_and_hm(file_path):
     """
     从文件名或者目录名中获取日期和时间
+    时间格式：yyyymmdd_hhmm 或者 yyyymmddhhmm
     :param file_path: (str)文件或者目录的路径
     :return: 存放年月日和小时分钟的列表
     """
-    if file_path:
+    try:
         file_name = os.path.split(file_path)[1]
-    else:
-        raise ValueError('value error: wrong file_path')
-    # 从文件名中获取
-    if os.path.isfile(file_path):
-        pat = r'.*(\d{8})_(\d{4})'
-        m = re.match(pat, file_name)
-        ymd = m.group(1)
-        hm = m.group(2)
-        return [ymd, hm]
-    # 从目录名中获取
-    elif os.path.isdir(file_path):
-        pat = r'.*(\d*)'
-        m = re.match(pat, file_name)
-        ymd = m.group()[0:8]
-        hm = m.group()[8:12]
-        return [ymd, hm]
+        # 从文件名中获取
+        if os.path.isfile(file_path):
+            pat = r'.*(\d{8})_(\d{4})'
+            m = re.match(pat, file_name)
+            ymd = m.group(1)
+            hm = m.group(2)
+            return [ymd, hm]
+        # 从目录名中获取
+        elif os.path.isdir(file_path):
+            pat = r'.*(\d*)'
+            m = re.match(pat, file_name)
+            ymd = m.group()[0:8]
+            hm = m.group()[8:12]
+            return [ymd, hm]
+        else:
+            return None
+    except TypeError:
+        return None
 
 
 def is_cross_time(start_date1, end_date1, start_date2, end_date2):
