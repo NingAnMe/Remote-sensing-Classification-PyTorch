@@ -166,3 +166,19 @@ def compress(pre_object, out_object, level=5):
     # 复制group属性
     for akey in pre_object.attrs.keys():
         out_object.attrs[akey] = pre_object.attrs[akey]
+
+
+def rewrite_data(file, dataset, data):
+    """
+    重写数据集
+    :param file: HDF5 文件
+    :param dataset: 重写的数据集
+    :param data: 新数据
+    :return:
+    """
+    if os.path.isfile(file):
+        with h5py.File(file, 'r+') as hdf5_file:
+            dset = hdf5_file.get('MaskRough')
+            dset[...] = data
+    else:
+        return
