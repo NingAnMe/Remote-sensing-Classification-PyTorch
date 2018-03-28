@@ -26,7 +26,8 @@ def read_dataset_hdf5(file_path, set_name):
     :param file_path: (unicode)文件路径
     :param set_name: (str or list)表的名字
     :return: 如果传入的表名字是一个字符串，返回 numpy.ndarray
-             如果传入的表名字是一个列表，返回一个字典，key 是表名字， value 是 numpy.ndarry
+             如果传入的表名字是一个列表，返回一个字典，key 是表名字，
+             value 是 numpy.ndarry
     """
     if isinstance(set_name, str):
         if os.path.isfile(file_path):
@@ -60,7 +61,8 @@ def read_attr_hdf5(file_path, set_name, attr_name):
     :param set_name: (str)表的名字
     :param attr_name: (str or list)属性的名字
     :return: 如果传入的属性的名字是一个字符串，返回对应的属性值
-             如果传入的属性的名字是一个列表，返回一个字典，key 是属性名， value 是对应的属性值
+             如果传入的属性的名字是一个列表，返回一个字典，key 是属性名，
+             value 是对应的属性值
     """
     if isinstance(attr_name, str):
         if os.path.isfile(file_path):
@@ -156,8 +158,11 @@ def compress(pre_object, out_object, level=5):
             out_dateset = out_object.create_group(key)
             compress(pre_dateset, out_dateset)
         else:
-            out_dateset = out_object.create_dataset(key, dtype=pre_dateset.dtype, data=pre_dateset,
-                                                    compression='gzip', compression_opts=level,  # 压缩等级5
+            out_dateset = out_object.create_dataset(key,
+                                                    dtype=pre_dateset.dtype,
+                                                    data=pre_dateset,
+                                                    compression='gzip',
+                                                    compression_opts=level,
                                                     shuffle=True)
             # 复制dataset属性
             for akey in pre_dateset.attrs.keys():
@@ -168,17 +173,17 @@ def compress(pre_object, out_object, level=5):
         out_object.attrs[akey] = pre_object.attrs[akey]
 
 
-def rewrite_data(file, dataset, data):
+def rewrite_data(hdf5_file, dataset, data):
     """
     重写数据集
-    :param file: HDF5 文件
+    :param hdf5_file: HDF5 文件
     :param dataset: 重写的数据集
     :param data: 新数据
     :return:
     """
-    if os.path.isfile(file):
-        with h5py.File(file, 'r+') as hdf5_file:
-            dset = hdf5_file.get('MaskRough')
+    if os.path.isfile(hdf5_file):
+        with h5py.File(hdf5_file, 'r+') as hdf5_file:
+            dset = hdf5_file.get(dataset)
             dset[...] = data
     else:
         return
