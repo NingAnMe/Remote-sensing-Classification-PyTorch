@@ -8,16 +8,7 @@ author : anning
 ~~~~~~~~~~~~~~~~~~~
 """
 
-import os
-import sys
-import logging
-import re
-from datetime import datetime
-from posixpath import join
-
-import h5py
 import numpy as np
-from configobj import ConfigObj
 
 
 def get_centre_point_avg_and_std(dataset, data_range):

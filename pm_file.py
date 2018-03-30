@@ -9,17 +9,9 @@ author : anning
 """
 
 import os
-import sys
-import logging
 import re
-from datetime import datetime, timedelta
-from posixpath import join
 
-import h5py
-import numpy as np
-from configobj import ConfigObj
-
-from pm_time import get_ymd_and_hm, is_cross_time, get_date_range, str2date
+from pm_time import get_ymd_and_hm, is_cross_time
 
 
 class File(object):
