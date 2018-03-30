@@ -25,7 +25,8 @@ def get_centre_point_avg_and_std(dataset, data_range):
         # 获取轴数
         shape = dataset.shape
         dim = int(shape[0])
-        avg_and_std = calculate_centre_point_avg_and_std(dataset, dim, data_range)
+        avg_and_std = calculate_centre_point_avg_and_std(dataset,
+                                                         dim, data_range)
         return avg_and_std
 
     elif rank == 3:  # 多条通道
@@ -38,7 +39,8 @@ def get_centre_point_avg_and_std(dataset, data_range):
         channels_avg_and_std = []
         for i in xrange(0, channel_num):
             dataset_tem = dataset[i]
-            avg_and_std = calculate_centre_point_avg_and_std(dataset_tem, dim, data_range)
+            avg_and_std = calculate_centre_point_avg_and_std(dataset_tem,
+                                                             dim, data_range)
             channels_avg_and_std.append(avg_and_std)
         return channels_avg_and_std
 
