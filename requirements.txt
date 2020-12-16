@@ -1,0 +1,13 @@
+flyai
+numpy
+opencv-python
+matplotlib
+scipy
+Pillow
+torch
+torchvision
+pytorch-lightning
+efficientnet_pytorch
+albumentations
+-e git+https://github.com/NingAnMe/Ranger-Deep-Learning-Optimizer#egg=ranger
+-e git+https://github.com/ildoonet/pytorch-gradual-warmup-lr.git#egg=warmup_scheduler
